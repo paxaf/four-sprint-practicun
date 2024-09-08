@@ -107,7 +107,7 @@ func WalkingSpentCalories(action int, duration, weight, height float64) float64 
 	speedSqr := math.Pow(speedMs, 2)               // скорость в м/c**2
 	k1 := walkingCaloriesWeightMultiplier * weight // коэффициент веса 1
 	k2 := walkingSpeedHeightMultiplier * weight    // коэффициент веса 2
-	return ((k1 + (speedSqr/height)*k2) * duration * float64(minInH))
+	return (k1 + (speedSqr/height)*k2) * duration * float64(minInH)
 
 }
 
