@@ -23,7 +23,7 @@ func distance(action int) float64 {
 	return float64(action) * lenStep / mInKm
 }
 
-// meanSpeed возвращает значение средней скорости движения во время тренировки.
+// meanSpeed возвращает значение средней скорости движения во время тренировки в километрах в час.
 //
 // Параметры:
 //
@@ -45,22 +45,22 @@ func meanSpeed(action int, duration float64) float64 {
 // trainingType string — вид тренировки(Бег, Ходьба, Плавание).
 // duration float64 — длительность тренировки в часах.
 func ShowTrainingInfo(action int, trainingType string, duration, weight, height float64, lengthPool, countPool int) string {
-	// ваш код здесь
+
 	switch {
 	case trainingType == "Бег":
-		distance := distance(action)                               // вызовите здесь необходимую функцию
-		speed := meanSpeed(action, duration)                       // вызовите здесь необходимую функцию
-		calories := RunningSpentCalories(action, weight, duration) // вызовите здесь необходимую функцию
+		distance := distance(action)
+		speed := meanSpeed(action, duration)
+		calories := RunningSpentCalories(action, weight, duration)
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Ходьба":
-		distance := distance(action)                                       // вызовите здесь необходимую функцию
-		speed := meanSpeed(action, duration)                               // вызовите здесь необходимую функцию
-		calories := WalkingSpentCalories(action, duration, weight, height) // вызовите здесь необходимую функцию
+		distance := distance(action)
+		speed := meanSpeed(action, duration)
+		calories := WalkingSpentCalories(action, duration, weight, height)
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Плавание":
-		distance := distance(action)                                               // вызовите здесь необходимую функцию
-		speed := swimmingMeanSpeed(lengthPool, countPool, duration)                // вызовите здесь необходимую функцию
-		calories := SwimmingSpentCalories(lengthPool, countPool, duration, weight) // вызовите здесь необходимую функцию
+		distance := distance(action)
+		speed := swimmingMeanSpeed(lengthPool, countPool, duration)
+		calories := SwimmingSpentCalories(lengthPool, countPool, duration, weight)
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	default:
 		return "неизвестный тип тренировки"
@@ -78,7 +78,7 @@ const (
 // Параметры:
 //
 // action int — количество совершенных действий(число шагов при ходьбе и беге, либо гребков при плавании).
-// weight float64 — вес пользователя.
+// weight float64 — вес пользователя в килограммах.
 // duration float64 — длительность тренировки в часах.
 func RunningSpentCalories(action int, weight, duration float64) float64 {
 	speed := meanSpeed(action, duration)
@@ -99,8 +99,8 @@ const (
 //
 // action int — количество совершенных действий(число шагов при ходьбе и беге, либо гребков при плавании).
 // duration float64 — длительность тренировки в часах.
-// weight float64 — вес пользователя.
-// height float64 — рост пользователя.
+// weight float64 — вес пользователя в килограммах.
+// height float64 — рост пользователя в сантиметрах.
 func WalkingSpentCalories(action int, duration, weight, height float64) float64 {
 	speedKmh := meanSpeed(action, duration)              // скорость в км/ч
 	speedMs := speedKmh * kmhInMsec                      // скорость в м/c
@@ -139,7 +139,7 @@ func swimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
 // lengthPool int — длина бассейна в метрах.
 // countPool int — сколько раз пользователь переплыл бассейн.
 // duration float64 — длительность тренировки в часах.
-// weight float64 — вес пользователя.
+// weight float64 — вес пользователя в килограммах.
 func SwimmingSpentCalories(lengthPool, countPool int, duration, weight float64) float64 {
 	speed := swimmingMeanSpeed(lengthPool, countPool, duration)
 	return (speed + swimmingCaloriesMeanSpeedShift) * swimmingCaloriesWeightMultiplier * weight * duration
